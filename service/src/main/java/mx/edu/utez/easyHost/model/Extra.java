@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
@@ -22,4 +24,6 @@ public class Extra {
     String descripcion;
     @Column(name = "url_imagen_extra", length = 255, nullable = false)
     String urlImagen;
+    @ManyToMany(mappedBy = "extras")
+    Set<Alojamiento> alojamientos;
 }

@@ -9,16 +9,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-@Table(name = "rol")
+@Table(name = "estatus")
 @Entity
-public class Rol {
+public class Estatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_rol")
+    @Column(name = "id_estatus")
     Long id;
-    @Column(name = "nombre_rol", length = 16)
-    String nombre;
-    @Column(name = "descripcion_rol", length = 32)
-    String descripcion;
-
+    @Column(name = "clave_estatus")
+    String clave;
+    @Column(name = "valor_estatus")
+    String valor;
 }

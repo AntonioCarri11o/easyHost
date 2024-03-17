@@ -9,16 +9,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-@Table(name = "rol")
+@Table(name = "cancelacion")
 @Entity
-public class Rol {
+public class Cancelacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_rol")
+    @Column(name = "id_cancelacion")
     Long id;
-    @Column(name = "nombre_rol", length = 16)
-    String nombre;
-    @Column(name = "descripcion_rol", length = 32)
-    String descripcion;
-
+    @Column(name = "motivo_cancelacion")
+    String motivo;
+    @JoinColumn(name = "fk_reserva", referencedColumnName = "id_reserva",nullable = false)
+    @OneToOne
+    Reserva reserva;
 }
