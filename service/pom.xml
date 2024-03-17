@@ -66,6 +66,12 @@
             <artifactId>spring-cloud-gcp-storage</artifactId>
             <version>5.0.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.twilio.sdk</groupId>
+            <artifactId>twilio</artifactId>
+            <version>8.8.0</version>
+        </dependency>
     </dependencies>
 
     <build>
