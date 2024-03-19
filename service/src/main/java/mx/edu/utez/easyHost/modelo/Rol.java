@@ -1,4 +1,4 @@
-package mx.edu.utez.easyHost.model;
+package mx.edu.utez.easyHost.modelo;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,12 @@ public class Rol {
     Long id;
     @Column(name = "nombre_rol", length = 16)
     String nombre;
-    @Column(name = "descripcion_rol", length = 32)
+    @Column(name = "descripcion_rol", length = 32, nullable = false, unique = true)
     String descripcion;
+
+    public Rol(String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
 
 }

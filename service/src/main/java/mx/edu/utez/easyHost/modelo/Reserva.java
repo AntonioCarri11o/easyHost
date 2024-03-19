@@ -1,4 +1,4 @@
-package mx.edu.utez.easyHost.model;
+package mx.edu.utez.easyHost.modelo;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,24 +6,31 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-@Table(name = "solicitud")
+@Table(name = "reserva")
 @Entity
-public class Solicitud {
+public class Reserva {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_solicitud")
+    @Column(name = "id_reserva")
     Long id;
-    @Column(name = "tipo_solicitud", nullable = false)
-    String tipo;
-    @Column(name = "campos_solicitud", columnDefinition = "json", nullable = false)
-    String campos;
+    @Column(name = "f_llegada_reserva")
+    Date fechaLlegada;
+    @Column(name = "f_salida_reserva")
+    Date fechaSalida;
+    @Column(name = "n_huespedes_reserva")
+    Integer numeroHuespedes;
     @JoinColumn(name = "fk_estatus", referencedColumnName = "id_estatus", nullable = false)
     @ManyToOne
     Estatus estatus;
+    @JoinColumn(name = "fk_alojamiento", referencedColumnName = "id_alojamiento", nullable = false)
+    @ManyToOne
+    Alojamiento alojamiento;
     @JoinColumn(name = "fk_usuario", referencedColumnName = "id_usuario", nullable = false)
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     Usuario usuario;
 }

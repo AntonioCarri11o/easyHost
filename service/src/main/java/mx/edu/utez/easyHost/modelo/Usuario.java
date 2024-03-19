@@ -1,4 +1,4 @@
-package mx.edu.utez.easyHost.model;
+package mx.edu.utez.easyHost.modelo;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -41,4 +41,26 @@ public class Usuario {
     @JoinColumn(name = "fk_rol", nullable = false)
     @ManyToOne
     Rol rol;
+
+    public Usuario(
+            String nombre,
+            String apellidos,
+            String correo,
+            String contrasenia,
+            String telefono,
+            String direccion,
+            Date fechaNacimiento,
+            String genero,
+            Rol rol
+    ) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.correo = correo;
+        this.contrasenia = contrasenia;
+        this.telefono = telefono;
+        this.direccion = direccion;
+        this.fechaNacimiento = fechaNacimiento;
+        this.genero = genero;
+        this.rol = rol;
+    }
 }

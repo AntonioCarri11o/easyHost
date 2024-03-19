@@ -1,4 +1,4 @@
-package mx.edu.utez.easyHost.model;
+package mx.edu.utez.easyHost.modelo;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
