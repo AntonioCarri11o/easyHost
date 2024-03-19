@@ -8,8 +8,12 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "vue": "^2.7.7",
-    "vue-router": "^3.5.4"
+    "bootstrap": "^5.3.3",
+    "bootstrap-vue": "^2.23.1",
+    "vue": "^2.7.16",
+    "vue-image-upload-resize": "^2.3.0",
+    "vue-router": "^3.5.4",
+    "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",
