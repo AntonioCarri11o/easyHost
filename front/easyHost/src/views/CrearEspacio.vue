@@ -14,10 +14,8 @@
             <b-form-group id="input-group-images" 
                 label-for="input-images" v-bind:state="imagesState" :invalid-feedback="imagesFeedback">
                 <b-form-file id="input-images" :value="imageUrls" accept="image/*" multiple required
-                    :max-size="2000000" @change="processImages"></b-form-file>
+                     @change="processImages"></b-form-file>
             </b-form-group>
-
-
 
             <b-form-group id="input-group-name" label="Nombre:" label-for="input-name" v-bind:state="nameState"
                 :invalid-feedback="nameFeedback">
@@ -29,46 +27,45 @@
                 <b-col cols="6">
                     <b-form-group id="input-group-location" label="Ubicación:" label-for="input-location"
                         v-bind:state="locationState" :invalid-feedback="locationFeedback">
-                        <b-form-input id="input-location" v-model="form.location" type="text" required
+                        <b-form-input id="input-location" v-model="form.ubicacion_alojamiento" type="text" required
                             @input="validateLocation"></b-form-input>
                     </b-form-group>
                 </b-col>
                 <b-col cols="4">
                     <b-form-group id="input-group-price" label="Precio por Noche:" label-for="input-price"
                         v-bind:state="priceState" :invalid-feedback="priceFeedback">
-                        <b-form-input id="input-price" v-model="form.price" type="number" min="0" required
+                        <b-form-input id="input-price" v-model="form.precio_alojamiento" type="number" min="0" required
                             @input="validatePrice"></b-form-input>
                     </b-form-group>
                 </b-col>
             </b-row>
 
-
             <b-row>
                 <b-col>
                     <b-form-group id="input-group-guests" label="Número de Huéspedes (máx. 7):" label-for="input-guests"
                         v-bind:state="guestsState" :invalid-feedback="guestsFeedback">
-                        <b-form-input id="input-guests" v-model="form.guests" type="number" min="1" max="7" required
+                        <b-form-input id="input-guests" v-model="form.n_huespedes_alojamiento" type="number" min="1" max="7" required
                             @input="validateGuests"></b-form-input>
                     </b-form-group>
                 </b-col>
                 <b-col>
                     <b-form-group id="input-group-beds" label="Número de Camas:" label-for="input-beds"
                         v-bind:state="bedsState" :invalid-feedback="bedsFeedback">
-                        <b-form-input id="input-beds" v-model="form.beds" type="number" min="1" required
+                        <b-form-input id="input-beds" v-model="form.n_camas_alojamiento" type="number" min="1" required
                             @input="validateBeds"></b-form-input>
                     </b-form-group>
                 </b-col>
                 <b-col>
                     <b-form-group id="input-group-checkin" label="Hora de Recepción:" label-for="input-checkin"
                         v-bind:state="checkinState" :invalid-feedback="checkinFeedback">
-                        <b-form-input id="input-checkin" v-model="form.checkin" type="time" required
+                        <b-form-input id="input-checkin" v-model="form.h_recepcion_alojamiento" type="time" required
                             @input="validateCheckin"></b-form-input>
                     </b-form-group>
                 </b-col>
                 <b-col>
                     <b-form-group id="input-group-checkout" label="Hora de Salida:" label-for="input-checkout"
                         v-bind:state="checkoutState" :invalid-feedback="checkoutFeedback">
-                        <b-form-input id="input-checkout" v-model="form.checkout" type="time" required
+                        <b-form-input id="input-checkout" v-model="form.h_salida_alojamiento" type="time" required
                             @input="validateCheckout"></b-form-input>
                     </b-form-group>
                 </b-col>
@@ -78,14 +75,14 @@
                 <b-col>
                     <b-form-group id="input-group-description" label="Descripción:" label-for="input-description"
                         v-bind:state="descriptionState" :invalid-feedback="descriptionFeedback">
-                        <b-form-textarea id="input-description" v-model="form.description" required rows="3"
+                        <b-form-textarea id="input-description" v-model="form.descripcion_alojamiento" required rows="3"
                             @input="validateDescription"></b-form-textarea>
                     </b-form-group>
                 </b-col>
                 <b-col>
                     <b-form-group id="input-group-category" label="Categoría:" label-for="input-category"
                         v-bind:state="categoryState" :invalid-feedback="categoryFeedback">
-                        <b-form-select id="input-category" v-model="form.category" :options="categories" required
+                        <b-form-select id="input-category" v-model="form.fk_categoria" :options="categories" required
                             @change="validateCategory"></b-form-select>
                     </b-form-group>
                 </b-col>
@@ -126,6 +123,7 @@
 
 <script>
 import draggable from 'vuedraggable';
+import axios from 'axios';
 export default {
     components: {
         draggable
@@ -134,16 +132,16 @@ export default {
     return {
         form: {
             name: "",
-            description: "",
-            location: "",
-            guests: 1,
-            beds: 1,
-            checkin: "",
-            checkout: "",
-            price: 0,
-            category: "",
+            descripcion_alojamiento: "",
+            ubicacion_alojamiento: "",
+            n_huespedes_alojamiento: 1,
+            n_camas_alojamiento: 1,
+            h_recepcion_alojamiento: "",
+            h_salida_alojamiento: "",
+            precio_alojamiento: 0,
+            fk_categoria: "",
             images: [],
-            extras: []
+            extras: []            
         },
         defaultExtras: ['Piscina', 'Wifi', 'Estacionamiento', 'Desayuno'],
         selectedExtras: [],
@@ -166,7 +164,6 @@ export default {
         categoryState: null,
         categoryFeedback: "La categoría es requerida.",
         imagesState: null,
-        imagesFeedback: "Se requieren al menos 5 imágenes y máximo 10, cada imagen debe ser menor a 2MB.",
         extrasState: null,
         extrasFeedback: "", 
         showForm: true 
@@ -185,6 +182,16 @@ export default {
     }
     },
     methods: {
+        async submitForm() {
+            try {
+                const response = await axios.post('http://localhost:3306/api/alojamientos', this.form);
+                console.log('Alojamiento creado:', response.data);
+                // Aquí podrías realizar alguna acción adicional después de crear el alojamiento, como redirigir a otra página o mostrar un mensaje de éxito
+            } catch (error) {
+                console.error('Error al crear el alojamiento:', error);
+                // Aquí podrías mostrar un mensaje de error al usuario o manejar el error de otra manera
+            }
+        },
         processImages(event) {
             const files = event.target.files;
 
@@ -199,10 +206,7 @@ export default {
         getImageUrl(image) {
             return image.url;
         },
-        validateImages() {
-            const validSize = this.form.images.every(image => image.file.size < 2000000); // Menor a 2MB
-            this.imagesState = this.form.images.length >= 5 && this.form.images.length <= 10 && validSize ? true : false;
-        },
+        
         addToSelected(extra) {
             this.selectedExtras.push(extra);
             const index = this.defaultExtras.indexOf(extra);
@@ -218,41 +222,36 @@ export default {
             }
         },
 
-        submitForm() {
-           
-        },
+        
         validateName() {
             this.nameState = this.form.name.length >= 3 ? true : false;
         },
         validateDescription() {
-            this.descriptionState = this.form.description.length >= 10 ? true : false;
+            this.descriptionState = this.form.descripcion_alojamiento.length >= 10 ? true : false;
         },
         validateLocation() {
             
             this.locationState = true;
         },
         validateGuests() {
-            this.guestsState = this.form.guests > 0 && this.form.guests <= 7 ? true : false;
+            this.guestsState = this.form.n_huespedes_alojamiento > 0 && this.form.n_huespedes_alojamiento <= 7 ? true : false;
         },
         validateBeds() {
-            this.bedsState = this.form.beds > 0 ? true : false;
+            this.bedsState = this.form.n_camas_alojamiento > 0 ? true : false;
         },
         validateCheckin() {
-            this.checkinState = this.form.checkin !== "" ? true : false;
+            this.checkinState = this.form.h_recepcion_alojamiento !== "" ? true : false;
         },
         validateCheckout() {
-            this.checkoutState = this.form.checkout !== "" ? true : false;
+            this.checkoutState = this.form.h_salida_alojamiento !== "" ? true : false;
         },
         validatePrice() {
-            this.priceState = this.form.price > 0 ? true : false;
+            this.priceState = this.form.precio_alojamiento > 0 ? true : false;
         },
         validateCategory() {
-            this.categoryState = this.form.category !== "" ? true : false;
+            this.categoryState = this.form.fk_categoria !== "" ? true : false;
         },
-        validateImages() {
-            const validSize = this.form.images.every(image => image.size < 2000000);
-            this.imagesState = this.form.images.length >= 5 && this.form.images.length <= 10 && validSize ? true : false;
-        }
+        
        
     }
 };
