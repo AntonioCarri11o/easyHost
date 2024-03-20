@@ -1,21 +1,23 @@
 <template>
-    <div class="container-fluid container">
+    <div class="container" resize="resize">
         <div class="buscador fixed-top">
             <img src="../../assets/EasyHost.png" alt="lupa" width="60px">
             <b-input-group class="mb-2">
-                <b-form-input class="search" type="search" v-model="busqueda"
-                    placeholder="Buscar alojamiento"></b-form-input>
+                <b-form-input type="search" v-model="busqueda" placeholder="Buscar alojamiento"></b-form-input>
                 <b-input-group-prepend is-text>
-                    <b-icon style="width: 25px; height: 30px; color: #7952b3;" icon="search"></b-icon>
+                    <b-icon icon="search"></b-icon>
                 </b-input-group-prepend>
             </b-input-group>
+            <!--             <input class="search-input" type="text" placeholder="Buscar alojamiento" v-model="busqueda">
+ --> <!-- Input de búsqueda con un icono de lupa -->
             <div class="input-container">
                 <div class="perfil" @click="toggleMenu">
                     <b-icon class="h5" icon="list"></b-icon>
-                    <b-icon class="h2" icon="person-circle" style="color: #7952b3;"></b-icon>
+                    <b-icon class="h2" icon="person-circle"></b-icon>
                 </div>
                 <MenuDropdown v-show="isOpen" />
             </div>
+
         </div>
         <!--         <hr style="width: 100%; margin: 0px 20px 0px 20px;"> -->
 
@@ -31,8 +33,8 @@
                         </div>
 
                         <div class="precio">
-                            <span>${{alojamiento.precio}} MXN </span>
-                            <span>noche</span>
+                            <span>${{alojamiento.precio}} MXN</span>
+                            <span> noche</span>
                         </div>
                     </b-card-text>
                     <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
@@ -60,16 +62,16 @@
                     {
                         id: 1,
                         imagen: img3,
-                        titulo: "Dreamhouse",
-                        ubicacion: "Barbieland, Estados Unidos",
-                        calificacion: 5,
-                        precio: 7500
+                        titulo: "Cabaña McAllen",
+                        ubicacion: "Tejas, Estados Unidos",
+                        calificacion: 3,
+                        precio: 2000
                     },
                     {
                         id: 2,
                         imagen: img4,
-                        titulo: "Casa lujosa",
-                        ubicacion: "Minecraft, Estados Unidos",
+                        titulo: "Cabaña McAllen",
+                        ubicacion: "Tejas, Estados Unidos",
                         calificacion: 4,
                         precio: 2000
                     },
@@ -84,15 +86,15 @@
                     {
                         id: 4,
                         imagen: img5,
-                        titulo: "Casa de Peppa pig",
+                        titulo: "Cabaña McAllen",
                         ubicacion: "Tejas, Estados Unidos",
-                        calificacion: 3,
+                        calificacion: 5,
                         precio: 2000
                     },
                     {
                         id: 5,
                         imagen: img2,
-                        titulo: "Cabaña de Eren y Mikasa",
+                        titulo: "Cabaña McAllen",
                         ubicacion: "Tejas, Estados Unidos",
                         calificacion: 3,
                         precio: 1200
@@ -100,7 +102,7 @@
                     {
                         id: 6,
                         imagen: img2,
-                        titulo: "Cabaña de Eren y Mikasa",
+                        titulo: "Cabaña McAllen",
                         ubicacion: "Tejas, Estados Unidos",
                         calificacion: 3,
                         precio: 1200
@@ -137,7 +139,7 @@
                         calificacion: 3,
                         precio: 1200
                     },
-                    /* {
+                    {
                         id: 11,
                         imagen: img5,
                         titulo: "Cabaña McAllen",
@@ -176,7 +178,7 @@
                         ubicacion: "Tejas, Estados Unidos",
                         calificacion: 3,
                         precio: 1200
-                    } */
+                    }
 
                 ]
             }
@@ -189,11 +191,12 @@
         }
     }
 </script>
-<style>
+<!-- <style>
     .container {
-        display: inline;
+        display:grid;
+        flex-direction: column;
         justify-content: center;
-        align-items: center;
+        background-color: aqua;
     }
 
     .buscador {
@@ -203,12 +206,25 @@
         align-items: center;
         gap: 190px;
         padding: 20px;
+        margin: 0px 20px 20px 10px;
     }
 
     .fixed-top {
         width: 100%;
         background-color: #fff;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .buscador input {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 800px;
+    }
+
+    .input-container {
+        position: relative;
+        display: inline-block;
     }
 
     .input-container input[type="text"] {
@@ -222,27 +238,27 @@
 
     .search-input {
         width: 100%;
+
     }
 
     .perfil {
         display: flex;
-        padding: 6px 5px 0px 5px;
-        border-radius: 20px;
+        align-items: center;
+        padding: 5px;
+        border-radius: 10px;
         border: #c5b8b8 solid 1px;
         gap: 10px;
-        align-items: center;
     }
 
     .alojamientos {
-        margin-top: 100px;
+        align-self: center;
+        position: relative;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        padding-left: 50px;
-        padding-right: 50px;
-        /* display: grid;
-        grid-template-columns: repeat(4, max-content);
-        gap: 100px; */
+        margin-left: 50px;
+        margin-right: 50px;
+        margin-top: 250px;
     }
 
     .alojamiento {
@@ -250,8 +266,6 @@
     }
 
     .card {
-        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        font-weight: bold;
         min-width: 30rem;
         max-width: 30rem;
         min-height: 20rem;
@@ -289,6 +303,5 @@
 
     .precio span:first-child {
         font-weight: bold;
-        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     }
-</style>
+</style> -->
