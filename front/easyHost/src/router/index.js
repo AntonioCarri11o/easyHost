@@ -9,7 +9,7 @@ const router = new VueRouter({
   base: import.meta.env.BASE_URL,
   routes: [
     {
-      path: '/',  
+      path: '/',
       redirect: '/inicioSesion'
     },
     {
