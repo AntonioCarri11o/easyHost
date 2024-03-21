@@ -1,7 +1,9 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Registro from '../componentes/usuario/Registro.vue';
+import InicioSesion from '../componentes/usuario/InicioSesion.vue';
+import Inicio from '../components/admin/Inicio.vue';
+import ListarUsuarios from '../components/admin/ListarUsuarios.vue';
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -10,17 +12,30 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView
+      redirect: '/inicioSesion'
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
+      path: '/inicioSesion',
+      name: 'InicioSesion',
+      component: InicioSesion
+    },
+    {
+      path: '/registro',
+      name: 'Registro',
+      component: Registro
+    },
+    {
+      path: '/admin',
+      component: Inicio,
+      children: [
+        {
+          path: '/usuarios',
+          name: 'ListarUsuarios',
+          component: ListarUsuarios
+        }
+      ]
     }
+
   ]
 })
 
