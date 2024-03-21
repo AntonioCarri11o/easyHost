@@ -11,6 +11,9 @@ body {
   margin: 0 auto;
   font-weight: normal;
 }
+.default-margen {
+  margin: 0 5em 0 5em;
+}
 .cursor-pointer {
   cursor: pointer;
 }

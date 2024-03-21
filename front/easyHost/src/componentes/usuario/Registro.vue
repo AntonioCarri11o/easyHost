@@ -27,7 +27,7 @@
                     </b-form-input>
                     <div v-if="campoEstado(v$.nombre.$invalid, v$.nombre.$dirty) == false"
                     class="mensaje-error"
-                    >El nombre es requerido y debe tener máximo 30 caracteres </div>
+                    >El nombre es requerido, solo letras del alfabeto y máximo 30 caracteres</div>
                 </b-form-group>
                 <b-form-group
                 class="col-12 col-sm-6"
@@ -44,7 +44,7 @@
                 </b-form-input>
                 <div v-if="campoEstado(v$.apellidos.$invalid, v$.apellidos.$dirty) == false"
                     class="mensaje-error"
-                    >Los apellidos son requeridos y deben tener máximo 50 caracteres</div>
+                    >Los apellidos son requeridos, solo letras del alfabeto y máximo 50 caracteres</div>
                 </b-form-group>
                 <b-form-group
                 class="col-12 col-sm-6"
@@ -168,7 +168,7 @@
                 </b-form-input>
                 <div v-if="campoEstado(v$.fechaNacimiento.$invalid, v$.fechaNacimiento.$dirty) == false"
                     class="mensaje-error"
-                    >La fecha de nacimiento es requerida y no debe ser mayor a la actual</div>
+                    >La fecha de nacimiento es requerida y debe ser mayor a 18 años cumplidos</div>
                 </b-form-group>
                 <b-form-group
                 class="col-12 col-sm-6"
@@ -193,7 +193,17 @@
                 </b-form-group>
                 <div class="col-12 mt-4 d-flex flex-column">
                     <div class="mx-auto">
-                        <b-button variant="primary" type="submit" class="w-100" :disabled="this.v$.$invalid">Registrar</b-button>
+                        <b-overlay
+                        :show="cargando"
+                        rounded
+                        opacity="0.6"
+                        spinner-small
+                        spinner-variant="primary"
+                        class="d-inline-block w-100"
+                        @hidden="onHidden"
+                        >
+                        <b-button ref="button" variant="primary" type="submit" class="w-100" :disabled="this.v$.$invalid">Registrar</b-button>
+                        </b-overlay>                        
                         <p class="fs-6">¿Ya tienes cuenta? <a href="#" class="text-decoration-none">Inicia sesión aquí</a></p>
                     </div>
                 </div>
@@ -217,14 +227,18 @@
 }
 </style>
 <script>
-import { required, maxLength, minLength, email, numeric, } from '@vuelidate/validators';
+import { required, maxLength, minLength, email, numeric, alpha, } from '@vuelidate/validators';
 import { useVuelidate} from '@vuelidate/core';
 import { recortarEspaciosEnBlanco } from '../../Utilidades';
 import usuarioServicio from '../servicio/Usuario.js';
 import Swal from 'sweetalert2';
-function fechaPasada(valor) {
+import { sonSoloLetras } from '../../Utilidades';
+
+function esMayorA18(valor) {
+    const fechaMaxima = new Date();
+    fechaMaxima.setFullYear(fechaMaxima.getFullYear() - 18);
     const fecha = new Date(valor);
-    return fecha < new Date();
+    return fecha < fechaMaxima;
 }
 export default {
     name: "Registro",
@@ -233,7 +247,7 @@ export default {
     },
     data() {
         return {
-            enviado: false,
+            cargando: false,
             nombre: '',
             apellidos: '',
             correo: '',
@@ -261,18 +275,21 @@ export default {
     },
     validations() {
         return {
-            nombre: {required, maxLength: maxLength(30)},
-            apellidos: {required, maxLength: maxLength(50)},
+            nombre: {required, maxLength: maxLength(30), soloLetras: valor => sonSoloLetras(valor)},
+            apellidos: {required, maxLength: maxLength(50), soloLetras: valor => sonSoloLetras(valor)},
             correo: {required, email},
             telefono: {required, numeric, minLength: minLength(10), maxLength: maxLength(10)},
             contrasenia: {required, coincideContrasenia: valor => this.contrasenia === this.confirmaContrasenia},
             confirmaContrasenia: {required, coincideContrasenia: valor => this.contrasenia === this.confirmaContrasenia},            
             direccion: {required},
-            fechaNacimiento: {required, fechaPasada: valor => fechaPasada(valor)},
+            fechaNacimiento: {required, esMayorA18Anios: valor => esMayorA18(valor)},
             genero: {required},
         }
     },
     methods: {
+        onHidden() {
+            this.$refs.button.focus()
+        },
         campoEstado(invalid, dirty) {
             if (!dirty) {
                 return null
@@ -299,6 +316,7 @@ export default {
             this.registrarUsuario(carga);
         },
         async registrarUsuario(carga) {
+            this.cargando = true;
             try {
                 const response = await usuarioServicio.registrarUsuario(carga);
                 if (response == "Registro exitoso!") {
@@ -310,10 +328,16 @@ export default {
                     }).then(()=> {
                         this.$router.push('/inicioSesion');
                     });
+                    this.cargando = false;
                 }
-
             } catch(err) {
-                console.error(err);
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Ha ocurrido un error al guardar",
+                    confirmButtonColor: "#0074d9"
+                });
+                this.cargando = false;
             }
         },
         cambiarMostrarC() {

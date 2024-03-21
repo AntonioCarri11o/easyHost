@@ -20,7 +20,7 @@ public class MayorA18AniosValidator implements ConstraintValidator<MayorA18Anios
         Date fecha;
         try {
             fecha = Utilidades.textoAFecha(fechaTexto);
-            return !esMayorA18(fecha);
+            return esMayorA18(fecha);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

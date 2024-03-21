@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Registro from '../componentes/usuario/Registro.vue';
 import InicioSesion from '../componentes/usuario/InicioSesion.vue';
 import Inicio from '../components/admin/Inicio.vue';
+import ListarUsuarios from '../components/admin/ListarUsuarios.vue';
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -27,7 +28,11 @@ const router = new VueRouter({
       path: '/admin',
       component: Inicio,
       children: [
-
+        {
+          path: '/usuarios',
+          name: 'ListarUsuarios',
+          component: ListarUsuarios
+        }
       ]
     }
 

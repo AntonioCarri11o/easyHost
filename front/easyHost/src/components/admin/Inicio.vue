@@ -1,8 +1,10 @@
 <template>
     <div class="w-100 h-100 d-flex">
         <BarraLateral></BarraLateral>
-        <div class="principal p-4">
-            <div class="w-100 h-100"></div>
+        <div class="principal">
+            <div class="w-100 h-100">
+                <router-view></router-view>
+            </div>
         </div>
     </div>
 </template>

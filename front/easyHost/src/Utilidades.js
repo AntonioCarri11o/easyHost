@@ -6,3 +6,7 @@ export function recortarEspaciosEnBlanco(texto) {
     //Retornar cadena sin más de un espacio en blanco entre palabras
     return texto.replace(/\s+/g, ' ');
 }
+
+export function sonSoloLetras(texto) {
+    return /^[a-zA-ZáéíóúüñÑ\s]+$/.test(texto);
+}
