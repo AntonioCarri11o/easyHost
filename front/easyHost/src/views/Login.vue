@@ -52,15 +52,14 @@
       <b-modal id="modal-recuperar" centered title="Recuperar Contraseña" hide-footer no-stacking>
         <b-form v-on:submit.prevent="validar">
           <label class="mb-2">Ingresa tu número telefonico (10 digitos)</label>
-          <b-form-input class="input-modal" v-model="numeroTelefono" placeholder="Número de Teléfono"
-            :state="enviado ? !v$.numeroTelefono.$invalid : null"></b-form-input>
+          <b-form-input autocomplete="off" maxlength="10" pattern="[0-9]+" class="input-modal" v-model="numeroTelefono"
+            placeholder="Número de Teléfono" :state="enviado ? !v$.numeroTelefono.$invalid : null"
+            @input="filtrarNumeros"></b-form-input>
 
           <b-form-invalid-feedback>
             <span v-if="v$.numeroTelefono.required.$invalid">La número de telefono es obligatorio</span>
-            <span v-else-if="v$.numeroTelefono.minLength.$invalid">El número de telefono debe de tener 10
-              caracteres</span>
-            <span v-else-if="v$.numeroTelefono.maxLength.$invalid">El número de telefono debe de tener 10
-              caracteres</span>
+            <span v-else-if="v$.numeroTelefono.minLength.$invalid || v$.numeroTelefono.maxLength.$invalid">El número de
+              teléfono debe tener 10 caracteres</span>
             <span v-else-if="v$.numeroTelefono.$invalid">El correo no es válido</span>
 
           </b-form-invalid-feedback>
@@ -76,7 +75,7 @@
       <b-modal id="modal-codigo" centered title="Recuperar Contraseña" hide-footer no-stacking>
         <form>
           <label class="mb-2">Ingresa el código de verificación (5 digitos)</label>
-          <b-form-input autocomplete="off" class="input-modal"></b-form-input>
+          <b-form-input maxlength="5" autocomplete="off" class="input-modal"></b-form-input>
 
           <b-button class="btn-modal mt-4" @click="$bvModal.hide('modal-codigo')">Cancelar</b-button>
           <b-button class="btn-modal mt-4 ms-2" variant="primary" v-b-modal.modal-contrasenias>Continuar</b-button>
@@ -111,7 +110,6 @@ import {
   maxLength,
   email,
   helpers,
-  regex,
   numeric
 } from "@vuelidate/validators";
 const { withParams } = helpers;
@@ -139,7 +137,6 @@ export default {
         required: required,
         minLength: withParams({ type: "minLength", min: 10 }, minLength(10)),
         maxLength: withParams({ type: "maxLength", min: 10 }, maxLength(10)),
-        regex: withParams({ type: "regex", regex: /^[0-9]+$/ }, regex),
 
       },
     };
