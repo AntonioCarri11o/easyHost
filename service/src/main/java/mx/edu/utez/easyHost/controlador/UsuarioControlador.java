@@ -22,7 +22,7 @@ public class UsuarioControlador {
     @Autowired
     UsuarioServicio usuarioServicio;
 
-    @PostMapping("registro/")
+    @PostMapping("registro")
     public ResponseEntity<String> registrarUsuario(@Valid @RequestBody UsuarioDTO usuarioDTO) {
         try {
             usuarioServicio.registrarUsuario(usuarioDTO);

@@ -11,6 +11,9 @@ body {
   margin: 0 auto;
   font-weight: normal;
 }
+.cursor-pointer {
+  cursor: pointer;
+}
 .fixed {
   position: fixed !important;
 }
