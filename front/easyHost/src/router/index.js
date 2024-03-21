@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Registro from '../componentes/usuario/Registro.vue';
+import InicioSesion from '../componentes/usuario/InicioSesion.vue';
 import Inicio from '../components/admin/Inicio.vue';
 Vue.use(VueRouter)
 

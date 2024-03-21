@@ -4,14 +4,14 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.NoArgsConstructor;
 import mx.edu.utez.easyHost.utilidades.Utilidades;
-import mx.edu.utez.easyHost.validacion.anotaciones.FechaActual;
+import mx.edu.utez.easyHost.validacion.anotaciones.MayorA18Anios;
 
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
 @NoArgsConstructor
-public class FechaActualValidator implements ConstraintValidator<FechaActual, String> {
+public class MayorA18AniosValidator implements ConstraintValidator<MayorA18Anios, String> {
     @Override
     public boolean isValid(String fechaTexto, ConstraintValidatorContext contexto) {
         if (!esFechaValida(fechaTexto)) {
@@ -20,18 +20,20 @@ public class FechaActualValidator implements ConstraintValidator<FechaActual, St
         Date fecha;
         try {
             fecha = Utilidades.textoAFecha(fechaTexto);
-            return !esFechaFutura(fecha);
+            return !esMayorA18(fecha);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private boolean esFechaFutura(Date fecha) {
-        return fecha.after(Calendar.getInstance().getTime());
-    }
+    private boolean esMayorA18(Date fecha) {
+        Calendar calendario = Calendar.getInstance();
+        calendario.add(Calendar.YEAR, -18);
+        return fecha.before(calendario.getTime());
 
+    }
     private boolean esFechaValida(String fechaCadena) {
-        if (fechaCadena == null) {
+        if(fechaCadena == null) {
             return false;
         }
         return Utilidades.esFormatoValidoFecha(fechaCadena);
