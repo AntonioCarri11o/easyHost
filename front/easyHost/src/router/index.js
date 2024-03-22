@@ -39,7 +39,23 @@ const router = new VueRouter({
           component: ListarUsuarios
         }
       ]
-    }
+    },
+    {
+      path: '/user',
+      component: InicioPrincipalUsuario,
+      children: [
+        {
+          path: '/ejemplo',
+          name: 'Ejemplo',
+          component: Ejemplo
+        },
+        {
+          path: '/solicitudCambio',
+          name: 'SolicitudCambio',
+          component: SolicitudCambio
+        }
+      ]
+    },
 
   ]
 })
