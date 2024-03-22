@@ -9,6 +9,7 @@ import mx.edu.utez.easyHost.repositorio.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -24,8 +25,12 @@ public class UsuarioServicio {
         if (!errores.isEmpty()) {
             throw new ConstraintViolationException(errores);
         }
-        Rol rol = rolRepositorio.getRolByNombre("huesped");
+        Rol rol = rolRepositorio.getRolByNombre("ROL_HUESPED");
         Usuario usuario = usuarioDto.crearUsuario(rol);
         return usuarioRepositorio.save(usuario);
+    }
+
+    public List<Usuario> listarUsuarios() {
+        return usuarioRepositorio.findAll();
     }
 }

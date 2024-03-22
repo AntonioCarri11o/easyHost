@@ -4,6 +4,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import mx.edu.utez.easyHost.dto.UsuarioDTO;
+import mx.edu.utez.easyHost.modelo.Usuario;
 import mx.edu.utez.easyHost.servicio.UsuarioServicio;
 import mx.edu.utez.easyHost.utilidades.Utilidades;
 import mx.edu.utez.easyHost.utilidades.VariableGlobal;
@@ -16,13 +17,18 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api/usuario/")
+@RequestMapping("/api/usuario")
 @CrossOrigin(origins = VariableGlobal.URL_ORIGENES_CRUZADOS)
 public class UsuarioControlador {
     @Autowired
     UsuarioServicio usuarioServicio;
 
-    @PostMapping("registro/")
+    @GetMapping
+    public List<Usuario> listarUsuarios() {
+        return usuarioServicio.listarUsuarios();
+    }
+
+    @PostMapping("/registro")
     public ResponseEntity<String> registrarUsuario(@Valid @RequestBody UsuarioDTO usuarioDTO) {
         try {
             usuarioServicio.registrarUsuario(usuarioDTO);

@@ -12,6 +12,7 @@ import mx.edu.utez.easyHost.modelo.Rol;
 import mx.edu.utez.easyHost.modelo.Usuario;
 import mx.edu.utez.easyHost.utilidades.Utilidades;
 import mx.edu.utez.easyHost.validacion.anotaciones.FechaActual;
+import mx.edu.utez.easyHost.validacion.anotaciones.MayorA18Anios;
 import mx.edu.utez.easyHost.validacion.anotaciones.ValidarTextoGlobal;
 
 import java.text.ParseException;
@@ -39,7 +40,7 @@ public class UsuarioDTO {
     String telefono;
     @NotBlank(message = "Dirección requerida")
     String direccion;
-    @FechaActual(message = "No puede ingresar una fecha futura")
+    @MayorA18Anios(message = "La fecha debe ser mayor a 18 años")
     String fechaNacimiento;
     @NotBlank(message = "Género requerido")
     @Pattern(regexp = "^(Hombre|Mujer)$", message = "El género solo puede ser 'Hombre' o 'Mujer'")

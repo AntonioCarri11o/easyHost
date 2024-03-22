@@ -22,15 +22,15 @@ public class Arranque {
 
     private void cargarRoles() {
         rolRepositorio.save(new Rol(
-                "admin",
+                "ROL_ADMIN",
                 "Gestion general"
         ));
         rolRepositorio.save(new Rol(
-                "anfitrion",
+                "ROL_ANFITRION",
                 "Crea y renta espacios"
         ));
         rolRepositorio.save(new Rol(
-                "huesped",
+                "ROL_HUESPED",
                 "Se hospeda en espacios"
         ));
     }
