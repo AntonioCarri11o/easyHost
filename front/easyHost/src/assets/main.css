@@ -1,17 +1,25 @@
 @import "./base.css";
-
-html, body {
+html {
+ width: 100%;
+ height: 100vh;
+}
+body {
   width: 100%;
   height: 100vh;
 }
 #app {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
-
   font-weight: normal;
 }
-
+.default-margen {
+  margin: 0 5em 0 5em;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.fixed {
+  position: fixed !important;
+}
 a,
 .green {
   text-decoration: none;
@@ -33,7 +41,5 @@ a,
 
   #app {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
   }
 }
