@@ -2,10 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Registro from '../componentes/usuario/Registro.vue';
 import InicioSesion from '../componentes/usuario/InicioSesion.vue';
-import InicioPrincipalUsuario from '../componentes/espacios/InicioPrincipalUsuario.vue';
 import Ejemplo from '../componentes/espacios/Ejemplo.vue';
 import Login from '../views/Login.vue';
-
 import SolicitudCambio from '../componentes/usuario/SolicitudCambio.vue';
 import Inicio from '../components/admin/Inicio.vue';
 import ListarUsuarios from '../components/admin/ListarUsuarios.vue';
@@ -17,7 +15,7 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
-      redirect: '/inicioPrincipalUsuario'
+      redirect: '/ejemplo'
     },
     {
       path: '/inicioSesion',
@@ -28,6 +26,11 @@ const router = new VueRouter({
       path: '/registro',
       name: 'Registro',
       component: Registro
+    },
+    {
+      path: '/ejemplo',
+      name: 'Ejemplo',
+      component: Ejemplo
     },
     {
       path: '/admin',
@@ -42,13 +45,8 @@ const router = new VueRouter({
     },
     {
       path: '/user',
-      component: InicioPrincipalUsuario,
+      component: SolicitudCambio,
       children: [
-        {
-          path: '/ejemplo',
-          name: 'Ejemplo',
-          component: Ejemplo
-        },
         {
           path: '/solicitudCambio',
           name: 'SolicitudCambio',
