@@ -52,9 +52,9 @@
       <b-modal id="modal-recuperar" centered title="Recuperar Contraseña" hide-footer no-stacking>
         <b-form v-on:submit.prevent="validar">
           <label class="mb-2">Ingresa tu número telefonico (10 digitos)</label>
-          <b-form-input autocomplete="off" maxlength="10" pattern="[0-9]+" class="input-modal" v-model="numeroTelefono"
-            placeholder="Número de Teléfono" :state="enviado ? !v$.numeroTelefono.$invalid : null"
-            @input="filtrarNumeros"></b-form-input>
+          <b-form-input autocomplete="off" maxlength="10" class=" input-modal" v-model="numeroTelefono"
+            placeholder="Número de Teléfono" inputmode="numeric" :state="enviado ? !v$.numeroTelefono.$invalid : null"
+            :formatter="formatoTelefono"></b-form-input>
 
           <b-form-invalid-feedback>
             <span v-if="v$.numeroTelefono.required.$invalid">La número de telefono es obligatorio</span>
@@ -75,7 +75,7 @@
       <b-modal id="modal-codigo" centered title="Recuperar Contraseña" hide-footer no-stacking>
         <form>
           <label class="mb-2">Ingresa el código de verificación (5 digitos)</label>
-          <b-form-input maxlength="5" autocomplete="off" class="input-modal"></b-form-input>
+          <b-form-input maxlength="5" autocomplete="off" class="input-modal" :formatter="formatoCodigo"></b-form-input>
 
           <b-button class="btn-modal mt-4" @click="$bvModal.hide('modal-codigo')">Cancelar</b-button>
           <b-button class="btn-modal mt-4 ms-2" variant="primary" v-b-modal.modal-contrasenias>Continuar</b-button>
@@ -87,9 +87,9 @@
       <b-modal id="modal-contrasenias" centered title="Recuperar Contraseña" hide-footer no-stacking>
         <form>
           <label class="mb-2">Ingresa tu nueva contraseña</label>
-          <b-form-input autocomplete="off"></b-form-input>
+          <b-form-input autocomplete="off" type="password"></b-form-input>
           <label class="mb-2 mt-4">Confirma tu nueva contraseña</label>
-          <b-form-input autocomplete="off"></b-form-input>
+          <b-form-input autocomplete="off" type="password"></b-form-input>
 
           <b-button class="btn-modal mt-4" @click="$bvModal.hide('modal-contrasenias')">Cancelar</b-button>
           <b-button class="btn-modal mt-4 ms-2" variant="primary">Confirmar</b-button>
@@ -124,6 +124,7 @@ export default {
       enviado: false,
 
       numeroTelefono: "",
+      codigoVerificacion: "",
     };
   },
   validations() {
@@ -146,6 +147,19 @@ export default {
       this.enviado = true;
       // Si los datos son válidos, se envían al servidor
     },
+    formatoTelefono(value) {
+      // Elimina todos los caracteres que no sean dígitos
+      const digits = value.replace(/\D/g, '');
+      // Aplica el formato deseado al número de teléfono
+      const formattedValue = digits.replace(/(\d{3})(\d{3})(\d{4})/, '$1$2$3');
+      return formattedValue;
+    },
+    formatoCodigo(value) {
+      // Elimina todos los caracteres que no sean dígitos
+      const digits = value.replace(/\D/g, '');
+      // Retorna los primeros 5 dígitos para asegurar que solo se ingresen 5 cifras
+      return digits.slice(0, 5);
+    }
 
   },
 };
