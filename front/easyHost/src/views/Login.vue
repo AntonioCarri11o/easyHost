@@ -50,50 +50,54 @@
 
     <div>
       <b-modal id="modal-recuperar" centered title="Recuperar Contraseña" hide-footer no-stacking>
-        <b-form v-on:submit.prevent="validar">
+        <b-form v-on:submit.prevent="validarTelefono">
           <label class="mb-2">Ingresa tu número telefonico (10 digitos)</label>
-          <b-form-input autocomplete="off" maxlength="10" class=" input-modal" v-model="numeroTelefono"
-            placeholder="Número de Teléfono" inputmode="numeric" :state="enviado ? !v$.numeroTelefono.$invalid : null"
+          <b-form-input autocomplete="off" maxlength="10" class="input-modal" v-model="numeroTelefono"
+            placeholder="Número de Teléfono" :state="enviado ? !v$.numeroTelefono.$invalid : null"
             :formatter="formatoTelefono"></b-form-input>
 
           <b-form-invalid-feedback>
             <span v-if="v$.numeroTelefono.required.$invalid">La número de telefono es obligatorio</span>
             <span v-else-if="v$.numeroTelefono.minLength.$invalid || v$.numeroTelefono.maxLength.$invalid">El número de
               teléfono debe tener 10 caracteres</span>
-            <span v-else-if="v$.numeroTelefono.$invalid">El correo no es válido</span>
-
           </b-form-invalid-feedback>
 
           <b-button class="btn-modal mt-4" @click="$bvModal.hide('modal-recuperar')">Cancelar</b-button>
-          <b-button class="btn-modal mt-4 ms-2" variant="primary" v-b-modal.modal-codigo
-            type="submit">Continuar</b-button>
+          <b-button class="btn-modal mt-4 ms-2" variant="primary" type="submit">Continuar</b-button>
         </b-form>
       </b-modal>
     </div>
 
     <div>
       <b-modal id="modal-codigo" centered title="Recuperar Contraseña" hide-footer no-stacking>
-        <form>
+        <b-form v-on:submit.prevent="validarCodigo">
           <label class="mb-2">Ingresa el código de verificación (5 digitos)</label>
-          <b-form-input maxlength="5" autocomplete="off" class="input-modal" :formatter="formatoCodigo"></b-form-input>
+          <b-form-input maxlength="5" autocomplete="off" class="input-modal" :formatter="formatoCodigo"
+            :state="enviado ? !v$.codigoVerificacion.$invalid : null"></b-form-input>
+
+          <b-form-invalid-feedback>
+            <span v-if="v$.codigoVerificacion.required.$invalid">El código de verificación es obligatorio</span>
+            <span v-else-if="v$.codigoVerificacion.minLength.$invalid || v$.codigoVerificacion.maxLength.$invalid">El
+              código de verificación debe tener 5 caracteres</span>
+          </b-form-invalid-feedback>
 
           <b-button class="btn-modal mt-4" @click="$bvModal.hide('modal-codigo')">Cancelar</b-button>
-          <b-button class="btn-modal mt-4 ms-2" variant="primary" v-b-modal.modal-contrasenias>Continuar</b-button>
-        </form>
+          <b-button class="btn-modal mt-4 ms-2" variant="primary" type="submit">Continuar</b-button>
+        </b-form>
       </b-modal>
     </div>
 
     <div>
       <b-modal id="modal-contrasenias" centered title="Recuperar Contraseña" hide-footer no-stacking>
-        <form>
+        <b-form>
           <label class="mb-2">Ingresa tu nueva contraseña</label>
           <b-form-input autocomplete="off" type="password"></b-form-input>
           <label class="mb-2 mt-4">Confirma tu nueva contraseña</label>
           <b-form-input autocomplete="off" type="password"></b-form-input>
 
           <b-button class="btn-modal mt-4" @click="$bvModal.hide('modal-contrasenias')">Cancelar</b-button>
-          <b-button class="btn-modal mt-4 ms-2" variant="primary">Confirmar</b-button>
-        </form>
+          <b-button class="btn-modal mt-4 ms-2" variant="primary" type="submit">Confirmar</b-button>
+        </b-form>
       </b-modal>
     </div>
 
@@ -110,7 +114,7 @@ import {
   maxLength,
   email,
   helpers,
-  numeric
+  sameAs
 } from "@vuelidate/validators";
 const { withParams } = helpers;
 export default {
@@ -124,7 +128,7 @@ export default {
       enviado: false,
 
       numeroTelefono: "",
-      codigoVerificacion: "",
+      codigoVerificacion: ""
     };
   },
   validations() {
@@ -138,8 +142,21 @@ export default {
         required: required,
         minLength: withParams({ type: "minLength", min: 10 }, minLength(10)),
         maxLength: withParams({ type: "maxLength", min: 10 }, maxLength(10)),
-
       },
+      codigoVerificacion: {
+        required: required,
+        minLength: withParams({ type: "minLength", min: 5 }, minLength(5)),
+        maxLength: withParams({ type: "maxLength", max: 5 }, maxLength(5)),
+      },
+      nuevaContrasenia: {
+        required: required,
+        minLength: withParams({ type: "minLength", min: 6 }, minLength(6)),
+      },
+      confirmarContrasenia: {
+        required: required,
+        sameAsNuevaContrasenia: withParams({ type: "sameAs", field: "nuevaContrasenia" }, sameAs("nuevaContrasenia")),
+      },
+
     };
   },
   methods: {
@@ -159,7 +176,31 @@ export default {
       const digits = value.replace(/\D/g, '');
       // Retorna los primeros 5 dígitos para asegurar que solo se ingresen 5 cifras
       return digits.slice(0, 5);
-    }
+    },
+    validarTelefono() {
+      this.enviado = true;
+      if (!this.v$.numeroTelefono.$invalid) {
+        // Si el número de teléfono es válido, se envía al servidor
+        console.log('Número de teléfono válido:', this.numeroTelefono);
+        // Se muestra el modal para ingresar el código de verificación
+        this.$bvModal.show('modal-codigo');
+      }
+    },
+    validarCodigo() {
+      this.enviado = true;
+      console.log('Código de verificación válido:', this.codigoVerificacion);
+      if (!this.v$.codigoVerificacion.$invalid) {
+        // Si el código de verificación es válido, se envía al servidor
+        console.log('Código de verificación válido:', this.codigoVerificacion);
+        // Se muestra el modal para ingresar la nueva contraseña
+        this.$bvModal.show('modal-contrasenias');
+      }
+
+    },
+    cambiarContrasenia() {
+      this.enviado = true;
+
+    },
 
   },
 };
