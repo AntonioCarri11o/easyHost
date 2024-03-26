@@ -18,7 +18,7 @@ public class Anfitrion {
     Long id;
     @Column(name = "curp_anfitrion", length = 18, nullable = false, unique = true)
     String curp;
-    @Column(name = "rfc_anfotrion", length = 13, nullable = false, unique = true)
+    @Column(name = "rfc_anfitrion", length = 13, nullable = false, unique = true)
     String rfc;
     @Column(name = "url_imagen_identificacion_anfitrion", nullable = false)
     String urlImagenIdentificacionAnfitrion;
