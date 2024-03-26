@@ -16,8 +16,7 @@ import java.util.Date;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_usuario")
-    Long id;
+     Long id;
     @Column(name = "nombre_usuario", length = 30, nullable = false)
     String nombre;
     @Column(name = "apellidos_usuario", length = 50, nullable = false)
