@@ -1,6 +1,8 @@
 package mx.edu.utez.easyHost.configuracion;
 
+import mx.edu.utez.easyHost.modelo.Estatus;
 import mx.edu.utez.easyHost.modelo.Rol;
+import mx.edu.utez.easyHost.repositorio.EstatusRepositorio;
 import mx.edu.utez.easyHost.repositorio.RolRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +16,8 @@ public class Arranque {
 
     @Autowired
     RolRepositorio rolRepositorio;
-
+    @Autowired
+    EstatusRepositorio estatusRepositorio;
     @PostConstruct
     public void alIniciar() {
         cargarRoles();
@@ -32,6 +35,29 @@ public class Arranque {
         rolRepositorio.save(new Rol(
                 "ROL_HUESPED",
                 "Se hospeda en espacios"
+        ));
+    }
+
+    private void cargarEstatus() {
+        estatusRepositorio.save(new Estatus(
+                "Activo",
+                true
+        ));
+        estatusRepositorio.save(new Estatus(
+           "Inactivo",
+           false
+        ));
+        estatusRepositorio.save(new Estatus(
+                "Aprobado",
+                true
+        ));
+        estatusRepositorio.save(new Estatus(
+                "Rechazado",
+                false
+        ));
+        estatusRepositorio.save(new Estatus(
+                "Pendiente",
+                false
         ));
     }
 }

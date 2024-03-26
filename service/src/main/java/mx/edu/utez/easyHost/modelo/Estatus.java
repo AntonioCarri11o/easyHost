@@ -1,5 +1,4 @@
 package mx.edu.utez.easyHost.modelo;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,5 +18,10 @@ public class Estatus {
     @Column(name = "clave_estatus")
     String clave;
     @Column(name = "valor_estatus")
-    String valor;
+    boolean valor;
+
+    public Estatus(String clave, boolean valor) {
+        this.clave = clave;
+        this.valor = valor;
+    }
 }
