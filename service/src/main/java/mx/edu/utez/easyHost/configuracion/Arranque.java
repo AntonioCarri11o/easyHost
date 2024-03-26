@@ -21,6 +21,7 @@ public class Arranque {
     @PostConstruct
     public void alIniciar() {
         cargarRoles();
+        cargarEstatus();
     }
 
     private void cargarRoles() {
