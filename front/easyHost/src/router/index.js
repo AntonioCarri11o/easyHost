@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import CrearEspacio from '../views/CrearEspacio.vue'
+import ReservarEspacio from '../views/CrearEspacio.vue'
 
 Vue.use(VueRouter)
 
@@ -10,8 +10,8 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
-      name: 'crear-espacio',
-      component: CrearEspacio
+      name: 'reservar-espacio',
+      component: ReservarEspacio
     },
     
   ]
