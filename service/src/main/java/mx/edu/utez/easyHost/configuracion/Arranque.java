@@ -1,8 +1,10 @@
 package mx.edu.utez.easyHost.configuracion;
 
 import mx.edu.utez.easyHost.modelo.Estatus;
+import mx.edu.utez.easyHost.modelo.Extra;
 import mx.edu.utez.easyHost.modelo.Rol;
 import mx.edu.utez.easyHost.repositorio.EstatusRepositorio;
+import mx.edu.utez.easyHost.repositorio.ExtraRepositorio;
 import mx.edu.utez.easyHost.repositorio.RolRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,6 +20,8 @@ public class Arranque {
     RolRepositorio rolRepositorio;
     @Autowired
     EstatusRepositorio estatusRepositorio;
+    @Autowired
+    ExtraRepositorio extraRepositorio;
     @PostConstruct
     public void alIniciar() {
         cargarRoles();
@@ -60,5 +64,15 @@ public class Arranque {
                 "Pendiente",
                 false
         ));
+    }
+
+    private void cargarExtras() {
+        extraRepositorio.save(
+                new Extra(
+                        "WI-FI",
+                        "Conexión de internet inalhámbrica",
+                        "https://cdn-icons-png.flaticon.com/512/93/93158.png"
+                )
+        );
     }
 }
