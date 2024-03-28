@@ -8,7 +8,8 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @Table(name = "anfitrion")
 @Entity
 public class Anfitrion {
@@ -18,7 +19,7 @@ public class Anfitrion {
     Long id;
     @Column(name = "curp_anfitrion", length = 18, nullable = false, unique = true)
     String curp;
-    @Column(name = "rfc_anfotrion", length = 13, nullable = false, unique = true)
+    @Column(name = "rfc_anfitrion", length = 13, nullable = false, unique = true)
     String rfc;
     @Column(name = "url_imagen_identificacion_anfitrion", nullable = false)
     String urlImagenIdentificacionAnfitrion;
@@ -26,4 +27,10 @@ public class Anfitrion {
     @OneToOne
     Usuario usuario;
 
+    public Anfitrion(String curp, String rfc, String urlImagenIdentificacionAnfitrion, Usuario usuario) {
+        this.curp = curp;
+        this.rfc = rfc;
+        this.urlImagenIdentificacionAnfitrion = urlImagenIdentificacionAnfitrion;
+        this.usuario = usuario;
+    }
 }

@@ -26,4 +26,11 @@ public class Resenia {
     @JoinColumn(name = "fk_alojamiento", referencedColumnName = "id_alojamiento", nullable = false)
     @ManyToOne
     Alojamiento alojamiento;
+
+    public Resenia(String contenido, int valoracion, Usuario usuario, Alojamiento alojamiento) {
+        this.contenido = contenido;
+        this.valoracion = valoracion;
+        this.usuario = usuario;
+        this.alojamiento = alojamiento;
+    }
 }

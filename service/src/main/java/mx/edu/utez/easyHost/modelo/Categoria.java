@@ -20,4 +20,9 @@ public class Categoria {
     @Column(name = "descripcion_categoria", length = 60, nullable = false)
     String descripcion;
 
+    public Categoria(String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
+
 }

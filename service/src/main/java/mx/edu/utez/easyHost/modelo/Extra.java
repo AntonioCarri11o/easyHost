@@ -26,4 +26,10 @@ public class Extra {
     String urlImagen;
     @ManyToMany(mappedBy = "extras")
     Set<Alojamiento> alojamientos;
+
+    public Extra(String nombre, String descripcion, String url) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.urlImagen = url;
+    }
 }

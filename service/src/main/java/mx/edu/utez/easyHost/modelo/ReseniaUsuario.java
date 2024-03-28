@@ -26,4 +26,11 @@ public class ReseniaUsuario {
     @JoinColumn(name = "fk_anfitrion", referencedColumnName = "id_anfitrion")
     @OneToOne
     Anfitrion anfitrion;
+
+    public ReseniaUsuario(String valoracionReseniaUsuario, Integer calificacionReseniaUsuario, Usuario usuario, Anfitrion anfitrion) {
+        this.valoracionReseniaUsuario = valoracionReseniaUsuario;
+        this.calificacionReseniaUsuario = calificacionReseniaUsuario;
+        this.usuario = usuario;
+        this.anfitrion = anfitrion;
+    }
 }

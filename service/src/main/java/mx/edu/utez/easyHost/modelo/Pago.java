@@ -21,11 +21,18 @@ public class Pago {
     @Column(name = "fecha_pago", nullable = false)
     Date fecha;
     @Column(name = "monto_pago", nullable = false)
-    Integer monto;
+    Double monto;
     @JoinColumn(name = "fk_estatus", nullable = false)
     @ManyToOne
     Estatus estatus;
     @JoinColumn(name = "fk_reserva", nullable = false)
     @OneToOne
     Reserva reserva;
+
+    public Pago(Date fecha, Double monto, Estatus estatus, Reserva reserva) {
+        this.fecha = fecha;
+        this.monto = monto;
+        this.estatus = estatus;
+        this.reserva = reserva;
+    }
 }
