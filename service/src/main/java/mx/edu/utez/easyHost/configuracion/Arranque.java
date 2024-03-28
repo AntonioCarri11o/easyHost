@@ -359,10 +359,12 @@ public class Arranque {
         Map<String, Object> campos = new HashMap<>();
         campos.put("curp", "LOVA910203HMCSRR05");
         campos.put("rfc", "LOVA910203123");
+        campos.put("fk_usuario", "1");
         campos.put("urlImagenIdentificacionAnfitrion", "https://wallpapercave.com/wp/wp7392497.jpg");
         Solicitud solicitud = new Solicitud(
-                "Cambio de rol",
+                "verificacion_anfitrion",
                 pendiente,
+                "",
                 usuario
         );
         solicitud.setCampos(campos);

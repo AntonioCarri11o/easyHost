@@ -8,7 +8,8 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @Table(name = "anfitrion")
 @Entity
 public class Anfitrion {
@@ -26,10 +27,10 @@ public class Anfitrion {
     @OneToOne
     Usuario usuario;
 
-    public Anfitrion(String curp, String rfc, String url, Usuario usuario) {
+    public Anfitrion(String curp, String rfc, String urlImagenIdentificacionAnfitrion, Usuario usuario) {
         this.curp = curp;
         this.rfc = rfc;
-        this.urlImagenIdentificacionAnfitrion = url;
+        this.urlImagenIdentificacionAnfitrion = urlImagenIdentificacionAnfitrion;
         this.usuario = usuario;
     }
 }

@@ -10,7 +10,8 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @Table(name = "solicitud")
 @Entity
 public class Solicitud {
@@ -29,8 +30,9 @@ public class Solicitud {
     @ManyToOne
     Usuario usuario;
 
-    public Solicitud(String tipo, Estatus estatus, Usuario usuario) {
+    public Solicitud(String tipo, Estatus estatus, String campos, Usuario usuario) {
         this.tipo = tipo;
+        this.campos = campos;
         this.estatus = estatus;
         this.usuario = usuario;
     }
