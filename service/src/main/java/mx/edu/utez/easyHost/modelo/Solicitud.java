@@ -26,7 +26,7 @@ public class Solicitud {
     @ManyToOne
     Estatus estatus;
     @JoinColumn(name = "fk_usuario", nullable = false)
-    @OneToOne
+    @ManyToOne
     Usuario usuario;
 
     public Solicitud(String tipo, Estatus estatus, Usuario usuario) {

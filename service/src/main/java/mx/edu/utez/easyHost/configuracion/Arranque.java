@@ -212,11 +212,8 @@ public class Arranque {
     }
     private void cargarAlojamiento() {
         Anfitrion anfitrion = anfitrionRepositorio.getAnfitrionByRfc("VECJ880326");
-        System.out.println("Cargo anfitrion: " + anfitrion.getUsuario().getNombre());
         Categoria categoria = categoriaRepositorio.getCategoriaByNombre("Casa");
-        System.out.println("Cargo categoria: " + categoria.getNombre());
         Estatus estatus = estatusRepositorio.getEstatusByClave("Activo");
-        System.out.println("Cargo estatus: " + estatus.getClave());
         Set<Extra> extras = new HashSet<>();
         extras.add(extraRepositorio.getExtraByNombre("WI-FI"));
         alojamientoRepositorio.save(new Alojamiento(
