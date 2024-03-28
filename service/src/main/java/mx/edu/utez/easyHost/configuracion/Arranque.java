@@ -354,7 +354,6 @@ public class Arranque {
         cargarSolicitud();
     }
     private void cargarSolicitud() {
-        Usuario usuario = usuarioRepositorio.getUsuarioByCorreo("usuario_cuatro@gmail.com");
         Estatus pendiente = estatusRepositorio.getEstatusByClave("Pendiente");
         Map<String, Object> campos = new HashMap<>();
         campos.put("curp", "LOVA910203HMCSRR05");
@@ -363,9 +362,7 @@ public class Arranque {
         campos.put("urlImagenIdentificacionAnfitrion", "https://wallpapercave.com/wp/wp7392497.jpg");
         Solicitud solicitud = new Solicitud(
                 "verificacion_anfitrion",
-                pendiente,
-                "",
-                usuario
+                ""
         );
         solicitud.setCampos(campos);
         solicitudRepositorio.save(solicitud);

@@ -20,6 +20,7 @@ import mx.edu.utez.easyHost.modelo.Usuario;
 public class SolicitudDTO {
     Long id;
 
+    @NotBlank(message = "Campos requeridos")
     String tipo;
 
     @NotBlank(message = "Campos requeridos")
@@ -27,13 +28,20 @@ public class SolicitudDTO {
     @JsonFormat(shape = JsonFormat.Shape.OBJECT)
     String campos;
 
-    public Solicitud crearSolicitud(Usuario usuario, Estatus estatus){
+    public Solicitud crearSolicitud(){
+        return new Solicitud(
+                getTipo(),
+                getCampos()
+        );
+    }
+
+    public Solicitud actualizarSolicitud(Usuario usuario,Estatus estatus){
         return new Solicitud(
                 getTipo(),
                 estatus,
                 getCampos(),
                 usuario
-        );
+                );
     }
 
 }

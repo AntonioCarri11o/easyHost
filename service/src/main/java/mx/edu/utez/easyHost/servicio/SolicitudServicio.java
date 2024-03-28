@@ -34,10 +34,8 @@ public class SolicitudServicio {
         if (!errores.isEmpty()){
             throw new ConstraintViolationException(errores);
         }
-        Solicitud solicitud = new Solicitud();
-        Usuario usuario = usuarioRepositorio.getUsuarioById(solicitud.getUsuario().getId());
-        Estatus estatus = estatusRepositorio.getEstatusByClave("PENDIENTE");
-        solicitud = solicitudDTO.crearSolicitud(usuario, estatus);
+        Solicitud solicitud;
+        solicitud = solicitudDTO.crearSolicitud();
 
         return solicitudRepositorio.save(solicitud);
     }

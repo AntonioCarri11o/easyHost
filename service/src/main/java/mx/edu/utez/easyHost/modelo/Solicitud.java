@@ -23,10 +23,10 @@ public class Solicitud {
     String tipo;
     @Column(name = "campos_solicitud", nullable = false, columnDefinition = "json")
     String campos;
-    @JoinColumn(name = "fk_estatus", referencedColumnName = "id_estatus", nullable = false)
+    @JoinColumn(name = "fk_estatus", referencedColumnName = "id_estatus", nullable = false, insertable = false, columnDefinition = "bigint default 5")
     @ManyToOne
     Estatus estatus;
-    @JoinColumn(name = "fk_usuario", nullable = false)
+    @JoinColumn(name = "fk_usuario", referencedColumnName = "id_usuario")
     @ManyToOne
     Usuario usuario;
 
@@ -35,6 +35,17 @@ public class Solicitud {
         this.campos = campos;
         this.estatus = estatus;
         this.usuario = usuario;
+    }
+
+    public Solicitud(String tipo, Estatus estatus, String campos) {
+        this.tipo = tipo;
+        this.campos = campos;
+        this.estatus = estatus;
+    }
+
+    public Solicitud(String tipo, String campos) {
+        this.tipo = tipo;
+        this.campos = campos;
     }
 
     public void setCampos(Object campos) {
