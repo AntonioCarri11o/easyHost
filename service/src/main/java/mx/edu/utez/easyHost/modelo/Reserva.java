@@ -33,4 +33,13 @@ public class Reserva {
     @JoinColumn(name = "fk_usuario", referencedColumnName = "id_usuario", nullable = false)
     @ManyToOne
     Usuario usuario;
+
+    public Reserva(Date fechaLlegada, Date fechaSalida, Integer numeroHuespedes, Estatus estatus, Alojamiento alojamiento, Usuario usuario) {
+        this.fechaLlegada = fechaLlegada;
+        this.fechaSalida = fechaSalida;
+        this.numeroHuespedes = numeroHuespedes;
+        this.estatus = estatus;
+        this.alojamiento = alojamiento;
+        this.usuario = usuario;
+    }
 }

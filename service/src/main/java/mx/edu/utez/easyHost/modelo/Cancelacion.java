@@ -21,4 +21,10 @@ public class Cancelacion {
     @JoinColumn(name = "fk_reserva", referencedColumnName = "id_reserva",nullable = false)
     @OneToOne
     Reserva reserva;
+
+    public Cancelacion(String motivo, Reserva reserva) {
+        this.motivo = motivo;
+        this.reserva = reserva;
+
+    }
 }

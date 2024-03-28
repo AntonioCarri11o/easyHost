@@ -26,4 +26,10 @@ public class Anfitrion {
     @OneToOne
     Usuario usuario;
 
+    public Anfitrion(String curp, String rfc, String url, Usuario usuario) {
+        this.curp = curp;
+        this.rfc = rfc;
+        this.urlImagenIdentificacionAnfitrion = url;
+        this.usuario = usuario;
+    }
 }
