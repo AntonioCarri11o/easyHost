@@ -1,11 +1,13 @@
 package mx.edu.utez.easyHost.controlador;
 
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
+import mx.edu.utez.easyHost.dto.AlojamientoDTO;
+import mx.edu.utez.easyHost.utilidades.Utilidades;
 import mx.edu.utez.easyHost.utilidades.VariableGlobal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import mx.edu.utez.easyHost.modelo.Alojamiento;
 import mx.edu.utez.easyHost.servicio.AlojamientoServicio;
 
@@ -22,6 +24,19 @@ public class AlojamientoControlador {
 
     @GetMapping
     public List <Alojamiento> listarAlojamientos(){return alojamientoServicio.listarAlojamientos();}
+
+    @PostMapping("/registro")
+    public ResponseEntity<String> registrarAlojamiento(@Valid @RequestBody AlojamientoDTO alojamientoDTO){
+        try{
+            alojamientoServicio.registrarAlojamiento(alojamientoDTO);
+            return ResponseEntity.ok("Registro exitoso!");
+        }catch (ConstraintViolationException e){
+            List<String> mensajesDeError = Utilidades.obtenerErrores(e);
+            return ResponseEntity.badRequest().body(mensajesDeError.toString());
+        }catch (Exception e){
+            throw new RuntimeException();
+        }
+    }
 
 
 }

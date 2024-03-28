@@ -53,4 +53,33 @@ public class Alojamiento {
             inverseJoinColumns = @JoinColumn(name = "id_extra")
     )
     Set<Extra> extras;
+
+    public Alojamiento(
+            String descripcion,
+            String ubicacion,
+            Double precio,
+            Integer numeroHuespedes,
+            Integer numeroCamas,
+            Integer numeroBanios,
+            Boolean disponibilidad,
+            Time horaRecepcion,
+            Time horaSalida
+//            Anfitrion anfitrion,
+//            Categoria categoria,
+//            Estatus estatus
+    ) {
+        this.descripcion = descripcion;
+        this.ubicacion = ubicacion;
+        this.precio = precio;
+        this.numeroHuespedes = numeroHuespedes;
+        this.numeroCamas = numeroCamas;
+        this.numeroBanios = numeroBanios;
+        this.disponibilidad = disponibilidad;
+        this.horaRecepcion = horaRecepcion;
+        this.horaSalida = horaSalida;
+        this.anfitrion = anfitrion;
+        this.categoria = categoria;
+        this.estatus = estatus;
+    }
+
 }
